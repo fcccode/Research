@@ -16,13 +16,13 @@ bool Detour::Initialize()
 
 bool Detour::Hook(LPCSTR szModule, LPCSTR szFunction, PVOID* ppTrueFunction, PVOID pDetourFunction)
 {
-  bool success = false;
+  auto success = false;
 
   EnterCriticalSection(&_hookCS);
 
   if ((ppTrueFunction) && (*ppTrueFunction == nullptr)) // not hooked
   {
-    PVOID pOriginalFunction = DetourFindFunction(szModule, szFunction); // find original
+    auto pOriginalFunction = DetourFindFunction(szModule, szFunction); // find original
 
     if (pOriginalFunction)  // found orig
     {
@@ -35,7 +35,7 @@ bool Detour::Hook(LPCSTR szModule, LPCSTR szFunction, PVOID* ppTrueFunction, PVO
         DetourTransactionCommit();
 
         // sanity check incase another thread has just set this value!
-        if ((ppTrueFunction) && (*ppTrueFunction == NULL))
+        if (ppTrueFunction && *ppTrueFunction == nullptr)
         {
           *ppTrueFunction = pOriginalFunction;
 
