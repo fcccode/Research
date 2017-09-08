@@ -1,19 +1,21 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-
-#include "../Cloudhouse.Detours/Cloudhouse.Detour.h"
+#include "..\Cloudhouse.Detours\Cloudhouse.Detour.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 static bool g_HookedFunctionCalled = false;
 
-typedef BOOL (WINAPI* T_Beep)(
+// modern C++ typedef for Beep function definition
+using T_Beep = BOOL(WINAPI*) (
   _In_ DWORD dwFreq,
   _In_ DWORD dwDuration
-);
+  );
 
+// somewhere to store the true function
 static T_Beep TrueBeep = nullptr;
 
+// out implementation of Beep
 BOOL WINAPI MyBeep(
   _In_ DWORD dwFreq,
   _In_ DWORD dwDuration
@@ -21,28 +23,25 @@ BOOL WINAPI MyBeep(
 {
   g_HookedFunctionCalled = true;
 
-	const auto result = TrueBeep(dwFreq, dwDuration);
+  BOOL result = TrueBeep(dwFreq, dwDuration);
 
   return result;
 }
 
-/**
- * \brief Simple tests that proves that hooking is functioning.
- */
 namespace CloudhouseDetoursTest
-{		
-	TEST_CLASS(UnitTest1)
-	{
-	public:
-		TEST_METHOD(TestDetourHook)
-		{
-      Assert::IsTrue(Cloudhouse::Detour::Hook("kernel32.dll", "Beep", reinterpret_cast<PVOID*>(&TrueBeep), &MyBeep));
-      
+{
+  TEST_CLASS(UnitTest1)
+  {
+  public:
+    TEST_METHOD(TestMethod1)
+    {
+      Assert::IsTrue(Cloudhouse::Detour::Hook("kernel32.dll", "Beep", (PVOID*)&TrueBeep, &MyBeep));
+
       Assert::IsNotNull(&TrueBeep);
 
-      Beep(500,100);
+      Beep(500, 100);
 
       Assert::IsTrue(g_HookedFunctionCalled);
-		}
-	};
+    }
+  };
 }

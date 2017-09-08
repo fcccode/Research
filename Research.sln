@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cloudhouse.Detours", "Cloud
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cloudhouse.Detours.Test", "Cloudhouse.Detours.Test\Cloudhouse.Detours.Test.vcxproj", "{1B0BBA5C-8074-40C7-99C1-621C2C845C05}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cloudhouse.SharedMemory", "Cloudhouse.SharedMemory\Cloudhouse.SharedMemory.vcxproj", "{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cloudhouse.SharedMemory.Test", "Cloudhouse.SharedMemory.Test\Cloudhouse.SharedMemory.Test.vcxproj", "{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +35,22 @@ Global
 		{1B0BBA5C-8074-40C7-99C1-621C2C845C05}.Release|x64.Build.0 = Release|x64
 		{1B0BBA5C-8074-40C7-99C1-621C2C845C05}.Release|x86.ActiveCfg = Release|Win32
 		{1B0BBA5C-8074-40C7-99C1-621C2C845C05}.Release|x86.Build.0 = Release|Win32
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Debug|x64.ActiveCfg = Debug|x64
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Debug|x64.Build.0 = Debug|x64
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Debug|x86.Build.0 = Debug|Win32
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Release|x64.ActiveCfg = Release|x64
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Release|x64.Build.0 = Release|x64
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Release|x86.ActiveCfg = Release|Win32
+		{DDBDC82B-61B9-4AF0-8ABA-470BB15E859B}.Release|x86.Build.0 = Release|Win32
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Debug|x64.ActiveCfg = Debug|x64
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Debug|x64.Build.0 = Debug|x64
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Debug|x86.Build.0 = Debug|Win32
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Release|x64.ActiveCfg = Release|x64
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Release|x64.Build.0 = Release|x64
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Release|x86.ActiveCfg = Release|Win32
+		{3A9B6BE5-9535-447F-A47B-7CB2BFF77503}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
