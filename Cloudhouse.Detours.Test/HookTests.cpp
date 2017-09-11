@@ -34,6 +34,7 @@ BOOL WINAPI MyBeep(
  * \brief Simple tests that proves that hooking is functioning.
  */
 namespace CloudhouseDetoursTest
+<<<<<<< HEAD
 {
   TEST_CLASS(UnitTest1)
   {
@@ -41,6 +42,14 @@ namespace CloudhouseDetoursTest
     TEST_METHOD(TestMethod1)
     {
       // This is how we hook a function, specify the dll, function, where to store the original function, and the hooked function
+=======
+{		
+	TEST_CLASS(UnitTest1)
+	{
+	public:
+		TEST_METHOD(TestDetourHook)
+		{
+>>>>>>> 709457ba5c427d3e05951e6a4c0424812ed73864
       Assert::IsTrue(Cloudhouse::Detour::Hook("kernel32.dll", "Beep", reinterpret_cast<PVOID*>(&TrueBeep), &MyBeep));
 
       Assert::IsNotNull(&TrueBeep);
