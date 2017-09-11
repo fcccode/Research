@@ -1,8 +1,3 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
-//
-
 #pragma once
 
 #include "targetver.h"
@@ -11,3 +6,9 @@
 
 #include "CppUnitTest.h"
 
+#include <Objbase.h>
+#pragma comment(lib, "ole32.lib")
+
+#include <vector>
+
+#include <TChar.h>
