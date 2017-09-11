@@ -4,7 +4,7 @@
 using namespace Cloudhouse;
 
 SharedMemory::SharedMemory()
-  : _baseAddress(0)
+  : _baseAddress(nullptr)
   , _fileSize(0)
   , _fileMapping(INVALID_HANDLE_VALUE)
   , _mapView(INVALID_HANDLE_VALUE)

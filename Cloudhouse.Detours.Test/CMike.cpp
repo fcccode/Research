@@ -4,14 +4,13 @@
 CMike::CMike()
   : _refCount(1)
 {
-
 }
 
 HRESULT STDMETHODCALLTYPE CMike::QueryInterface(/* [in] */ REFIID riid, /* [iid_is][out] */ _COM_Outptr_ void __RPC_FAR *__RPC_FAR *ppvObject)
 {
-  HRESULT result = E_NOINTERFACE;
+  auto result = E_NOINTERFACE;
 
-  *ppvObject = NULL;
+  *ppvObject = nullptr;
 
   if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IMike))
   {
@@ -32,7 +31,7 @@ ULONG STDMETHODCALLTYPE CMike::AddRef()
 
 ULONG STDMETHODCALLTYPE CMike::Release()
 {
-  ULONG count = InterlockedDecrement(&_refCount);
+  auto const count = InterlockedDecrement(&_refCount);
 
   if (count == 0)
   {

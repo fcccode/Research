@@ -25,11 +25,12 @@ namespace CloudhouseSharedMemoryTest
 
         CopyMemory(pData, "HELLO", 5);
 
+        // Following code could be in a different process.
         Cloudhouse::SharedMemory childMemory;
 
-        LPVOID pChildData = childMemory.Open(L"some_exe");
+        LPCVOID pChildData = childMemory.Open(L"some_exe");
 
-        testString = (CHAR*)pChildData;
+        testString = static_cast<LPCSTR>(pChildData);
       }
 
       Assert::IsTrue(testString.Compare("HELLO") == 0);
