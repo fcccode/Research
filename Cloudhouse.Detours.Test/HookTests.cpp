@@ -14,8 +14,16 @@ typedef BOOL(WINAPI* T_Beep)(
   _In_ DWORD dwDuration
   );
 
+typedef HRESULT(* T_CoCreateInstance)(
+_In_     REFCLSID rclsid,
+_In_opt_ LPUNKNOWN pUnkOuter,
+_In_     DWORD dwClsContext,
+_In_     REFIID riid,
+_COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID FAR* ppv);
+
 // Where we store the original function
 static T_Beep TrueBeep = nullptr;
+static T_CoCreateInstance TrueCoCreateInstance = nullptr;
 
 // My implementation of the the function.
 BOOL WINAPI MyBeep(
@@ -30,6 +38,20 @@ BOOL WINAPI MyBeep(
   return result;
 }
 
+HRESULT MyCoCreateInstance(
+  _In_     REFCLSID rclsid,
+  _In_opt_ LPUNKNOWN pUnkOuter,
+  _In_     DWORD dwClsContext,
+  _In_     REFIID riid,
+  _COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID FAR* ppv)
+{
+  HRESULT hr = TrueCoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv);
+
+  return hr;
+}
+
+
+
 /**
  * \brief Simple tests that proves that hooking is functioning.
  */
@@ -38,8 +60,8 @@ namespace CloudhouseDetoursTest
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		TEST_METHOD(TestDetourHook)
-		{
+    TEST_METHOD(TestDetourHook)
+    {
       Assert::IsTrue(Cloudhouse::Detour::Hook("kernel32.dll", "Beep", reinterpret_cast<PVOID*>(&TrueBeep), &MyBeep));
 
       Assert::IsNotNull(&TrueBeep);
@@ -47,6 +69,25 @@ namespace CloudhouseDetoursTest
       Beep(500, 100);
 
       Assert::IsTrue(g_HookedFunctionCalled);
+    }
+
+    TEST_METHOD(TestCoCreateInstance)
+    {
+      Assert::IsTrue(Cloudhouse::Detour::Hook("ole32.dll", "CoCreateInstance", reinterpret_cast<PVOID*>(&TrueCoCreateInstance), &MyCoCreateInstance));
+
+      Assert::IsNotNull(&TrueCoCreateInstance);
+
+      CoInitialize(nullptr);
+
+      CLSID rclsid;
+      CLSIDFromProgID(OLESTR("Word.Document"), &rclsid);
+
+      IUnknown* punk = nullptr;
+      HRESULT hr = CoCreateInstance(rclsid, NULL, CLSCTX_LOCAL_SERVER, IID_IUnknown, (void**)&punk);
+
+      UNREFERENCED_PARAMETER(hr);
+
+      CoUninitialize();
     }
   };
 }

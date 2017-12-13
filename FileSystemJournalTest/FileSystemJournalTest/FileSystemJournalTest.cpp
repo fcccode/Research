@@ -67,9 +67,11 @@ public:
   {
     QueryJournal();
 
-    //CString temp;
-    //temp.Format(L"Record count = %lld\n", _usnJournalData.NextUsn - _startUSN);
-    //OutputDebugString(temp);
+#ifdef _DEBUG
+    CString temp;
+    temp.Format(L"Record count = %lld\n", _usnJournalData.NextUsn - _startUSN);
+    OutputDebugString(temp);
+#endif
 
     READ_USN_JOURNAL_DATA_V0 ReadData = { _startUSN, 0xFFFFFFFF, FALSE, 0, 0, _usnJournalData.UsnJournalID };
     PUSN_RECORD UsnRecord = {};
@@ -83,7 +85,6 @@ public:
       DWORD bytesRead = 0;
       if (!DeviceIoControl(_disk, FSCTL_READ_USN_JOURNAL, &ReadData, sizeof(ReadData), &buffer, UNIT_PAGE_SIZE, &bytesRead, nullptr))
       {
-        printf("Read journal failed (%d)\n", GetLastError());
         return;
       }
 
