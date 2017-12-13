@@ -25,6 +25,7 @@ void CreateFakeIID(GUID& originalIID, GUID& fakeIID)
     static DWORD dwGuidLength = (wcslen(szOriginalIID) + 1) * sizeof(TCHAR);
 
     RegSetValueEx(hMappedIIDsKey, szOriginalIID, 0, REG_SZ, reinterpret_cast<BYTE*>(szFakeIID), dwGuidLength);
+
     RegCloseKey(hMappedIIDsKey);
   }
 }
@@ -52,6 +53,7 @@ BOOL CreateOrGetFakeIID(GUID& originalIID, GUID& fakeIID)
       CLSIDFromString(szFakeIID, &fakeIID);
       bFoundFakeIID = TRUE;
     }
+
     RegCloseKey(hMappedIIDsKey);
   }
 
@@ -149,7 +151,10 @@ void HookCOMFunctions()
     }
   }
 
-  // Need to hook CoRevokeObject too!! this will remove the fake registered objects!
+  //
+  //TODO: Need to hook CoRevokeObject too!! this will remove the fake registered objects from the RPC/COM service
+  // CoCreateInstanceEx - will also need to be hooked too!
+  // CoCreateInstance & CoCreateInstanceEx drop down to ICoCreateInstanceEx but is not exported!
 
-  // Need to create our keys as volatile - not done for now asRegCopyTree does not like volatile keys!!!!
+  //TODO: Need to handle 32bit/64bit correctly!
 }
